@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Patient Registration Form</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    .panel
+    {
+      background-color:antiquewhite;
+    }
+    .panel-heading
+    {
+      background-color: darksalmon;
+      color:black;
+      font-size: 2em;
+    }
+    
+   
+  </style>
+  <script>
+    $(document).ready(function () {
+      $(".parnamediv").hide();
+      $(".parnodiv").hide();
+      $(".insnamediv").hide();
+      $(".insiddiv").hide();
+
+      var myJson = {
+        "states": [
+          {
+            "id": "tn",
+            "cities": [
+              {
+                "name": "Chennai",
+                "id": "tncity1"
+              },
+              {
+                "name": "Coimbatore",
+                "id": "tncity2"
+              },
+              {
+                "name": "Salem",
+                "id": "tncity3"
+              },
+              {
+                "name": "Trichy",
+                "id": "tncity4"
+              },
+              {
+                "name": "Vellore",
+                "id": "tncity5"
+              },
+              {
+                "name": "Trippur",
+                "id": "tncity6"
+              },
+              {
+                "name": "Thirunelveli",
+                "id": "tncity7"
+              },
+              {
+                "name": "Erode",
+                "id": "tncity8"
+              },
+              {
+                "name": "Kanchipuram",
+                "id": "tncity9"
+              },
+              {
+                "name": "Ooty",
+                "id": "tncity10"
+              }
+            ]
+          },
+          {
+            "id": "kr",
+            "cities": [
+              {
+                "name": "Thiruvananthapuram",
+                "id": "krcity1"
+              },
+              {
+                "name": "Kozhikode",
+                "id": "krcity2"
+              },
+              {
+                "name": "Kochi",
+                "id": "krcity3"
+              },
+              {
+                "name": "Kollam",
+                "id": "krcity4"
+              },
+              {
+                "name": "	Thrissur",
+                "id": "krcity5"
+              },
+              {
+                "name": "	Kannur",
+                "id": "krcity6"
+              },
+              {
+                "name": "Alappuzha",
+                "id": "krcity7"
+              },
+              {
+                "name": "Kottayam",
+                "id": "krcity8"
+              },
+              {
+                "name": "	Palakkad",
+                "id": "krcity9"
+              },
+              {
+                "name": "	Manjeri",
+                "id": "krcity10"
+              }
+            ]
+          },
+          {
+            "id": "ka",
+            "cities": [
+              {
+                "name": "Mysurue",
+                "id": "kacity1"
+              },
+              {
+                "name": "Bangalore",
+                "id": "kacity2"
+              },
+              {
+                "name": "Mangalore",
+                "id": "kacity3"
+              },
+              {
+                "name": "Belagum",
+                "id": "kacity4"
+              },
+              {
+                "name": "Gulbarga",
+                "id": "kacity5"
+              },
+              {
+                "name": "Davanagere",
+                "id": "kacity6"
+              },
+              {
+                "name": "Shimoga",
+                "id": "kacity7"
+              },
+              {
+                "name": "Bidar",
+                "id": "kacity8"
+              },
+              {
+                "name": "Hassan",
+                "id": "kacity9"
+              },
+              {
+                "name": "Mandya",
+                "id": "kacity10"
+              }
+            ]
+          }
+        ]
+      }
+
+
+      $('#state').on('change', function () {
+        for (var i = 0; i < myJson.states.length; i++) {
+          if (myJson.states[i].id == $(this).val()) {
+            $('#city').html('<option value="000">---Select city---</option>');
+            $.each(myJson.states[i].cities, function (index, value) {
+              $("#city").append('<option value="' + value.id + '">' + value.name + '</option>');
+            });
+          }
+        }
+      });
+
+      $('#dob').on('blur', function () {
+        var dateString = $(this).val();
+        var today = new Date();
+        var birthDate = new Date(dateString);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+
+        if (age < 18) {
+          $(".parnamediv").show();
+          $(".parnodiv").show();
+        }
+
+      });
+      $('input:radio[name="insurrad"]').change(
+        function () {
+          if ($(this).is(':checked') && $(this).val() == 'Yes') {
+            $(".insnamediv").show();
+            $(".insiddiv").show();
+          }
+          else {
+            $(".insnamediv").hide();
+            $(".insiddiv").hide();
+          }
+        });
+    });
+  </script>
+</head>
+
+<body>
+ 
+   <div class="container">
+
+    <div class="panel ">
+      <div class="panel-heading">
+        PATIENT REGISTRATION FORM
+      </div>
+      <div class="panel-body">
+        <form class="form-horizontal" action="">
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="fname">First Name:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="fname" placeholder="Enter First Name" name="fname">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="lname">Last Name:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="lname" placeholder="Enter Last Name" name="lname">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="addr">Address:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="addr" placeholder="Enter Address" name="addr">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="state">State</label>
+            <div class="col-sm-9">
+              <select class="form-control" id="state">
+                <option value="">----Select----</option>
+                <option value="tn">Tamil Nadu</option>
+                <option value="ka">Karnataka</option>
+                <option value="kr">Kerala</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="city">City</label>
+            <div class="col-sm-9">
+              <select class="form-control" id="city">
+
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="phno">Phone Number:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="phno" placeholder="Enter Mobile Number" name="phno">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="pincode">Pincode:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="pincode" placeholder="Enter Pincode" name="pincode">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="dob">Date Of Birth:</label>
+            <div class="col-sm-9">
+              <input type="date" class="form-control" id="dob" placeholder="Enter Date Of Birth" name="dob">
+            </div>
+          </div>
+          <div class="form-group parnamediv">
+            <label class="control-label col-sm-3" for="parentname">Name of the Parent:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="parentname" placeholder="Enter Parent Name" name="parentname">
+            </div>
+          </div>
+          <div class="form-group parnodiv">
+            <label class="control-label col-sm-3" for="parentno">Parent Phone Number:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="parentno" placeholder="Enter Parent Phone Number"
+                name="parentno">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="genrad">Gender:</label>
+            <div class="col-sm-9">
+              <div class="radio">
+                <label><input type="radio" name="genrad">Male</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="genrad">Female</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="marrad">Marital Status:</label>
+            <div class="col-sm-9">
+              <div class="radio">
+                <label><input type="radio" name="marrad">Married</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="marrad">Single</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="email">Email-Id:</label>
+            <div class="col-sm-9">
+              <input type="email" class="form-control" id="email" placeholder="Enter Email-Id" name="email">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="emerphno">Emergency Phone Number:</label>
+            <div class="col-sm-9">
+              <input type="email" class="form-control" id="emerphno" placeholder="Enter Emergency Phone Number"
+                name="emerphno">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="insurrad">Insurance Available:</label>
+            <div class="col-sm-9">
+              <div class="radio">
+                <label><input type="radio" name="insurrad" value="Yes">Yes</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="insurrad" value="No">No</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group insnamediv">
+            <label class="control-label col-sm-3" for="insname">Provider Name:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="insname" placeholder="Enter Provider Name" name="insname">
+            </div>
+          </div>
+          <div class="form-group insiddiv">
+            <label class="control-label col-sm-3" for="insid">Policy Id:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="insid" placeholder="Enter Policy Id" name="insid">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+              <button type="submit" class="btn btn-lg btn-block" style="background-color:darksalmon ;color:black;font-size: 1em;">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>
